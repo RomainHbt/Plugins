@@ -7,7 +7,10 @@ public class PluginFilter implements FilenameFilter {
 
 	@Override
 	public boolean accept(File dir, String name) {
-		// TODO Auto-generated method stub
+		if(name.endsWith(".class")){
+			
+			return true;
+		}
 		return false;
 	}
 
