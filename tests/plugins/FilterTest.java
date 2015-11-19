@@ -10,21 +10,22 @@ import org.junit.Test;
 public class FilterTest {
 
 	PluginFilter f;
+	File dir;
 	
 	@Before
 	public void setUp() throws Exception {
+		dir = new File("./dropins");
 		f = new PluginFilter();
 	}
 
 	@Test
 	public void notExistsFileTest() {
-		assertFalse(f.accept(null, "jenexistepas.class"));
+		assertFalse(f.accept(dir, "jenexistepas.class"));
 	}
 	
 	@Test
-	public void dirTest() {
-		File dir = new File("./bin");
-		assertTrue(f.accept(dir, "PluginFilter.class"));
+	public void existsFileTest() {
+		assertTrue(f.accept(dir, "ToUppercasePlugin.class"));
 	}
 
 }
