@@ -20,11 +20,11 @@ public class PluginFinder {
 		this.files = new ArrayList<File>();
 		this.filter = new PluginFilter();
 		this.dir = new File(dir);
-		this.timer = new Timer(DELAY, new MyActionListener());
+		this.timer = new Timer(DELAY, new CheckFilesListener());
 		this.timer.start();
 	}
 	
-	private class MyActionListener implements ActionListener{
+	private class CheckFilesListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
