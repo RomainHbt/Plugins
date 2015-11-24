@@ -66,5 +66,97 @@ public class MainFrame extends JFrame{
 		
 		setJMenuBar(menu);
 	}
+	
+	public void setText(String s){
+		this.textArea.setText(s);
+	}
+	
+	public String getText(){
+		return this.textArea.getText();
+	}
+
+	/**
+	 * @return the menu
+	 */
+	public JMenuBar getMenu() {
+		return menu;
+	}
+
+	/**
+	 * @param menu the menu to set
+	 */
+	public void setMenu(JMenuBar menu) {
+		this.menu = menu;
+	}
+
+	/**
+	 * @return the files
+	 */
+	public JMenu getFiles() {
+		return files;
+	}
+
+	/**
+	 * @param files the files to set
+	 */
+	public void setFiles(JMenu files) {
+		this.files = files;
+	}
+
+	/**
+	 * @return the tools
+	 */
+	public JMenu getTools() {
+		return tools;
+	}
+
+	/**
+	 * @param tools the tools to set
+	 */
+	public void setTools(JMenu tools) {
+		this.tools = tools;
+	}
+
+	/**
+	 * @return the help
+	 */
+	public JMenu getHelp() {
+		return help;
+	}
+
+	/**
+	 * @param help the help to set
+	 */
+	public void setHelp(JMenu help) {
+		this.help = help;
+	}
+
+	/**
+	 * @return the open
+	 */
+	public JMenuItem getOpen() {
+		return open;
+	}
+
+	/**
+	 * @param open the open to set
+	 */
+	public void setOpen(JMenuItem open) {
+		this.open = open;
+	}
+
+	/**
+	 * @return the exit
+	 */
+	public JMenuItem getExit() {
+		return exit;
+	}
+
+	/**
+	 * @param exit the exit to set
+	 */
+	public void setExit(JMenuItem exit) {
+		this.exit = exit;
+	}
 
 }
