@@ -1,11 +1,12 @@
 package plugins;
 
+import ihm.MainFrame;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class PluginFinder {
@@ -14,18 +15,16 @@ public class PluginFinder {
 	private PluginFilter filter;
 	private Timer timer;
 	private File dir;
-	private List<File> files;
+	
+	private JFrame frame;
 
-	public PluginFinder(String dir) {
-		this.files = new ArrayList<File>();
+	public PluginFinder(String dir, JFrame frame) {
+		this.frame = frame;
 		this.filter = new PluginFilter();
 		this.dir = new File(dir);
 		this.timer = new Timer(DELAY, new CheckFilesListener());
 		this.timer.start();
-	}
-	
-	public List<File> getPlugins(){
-		return this.files;
+		
 	}
 	
 	private class CheckFilesListener implements ActionListener{
@@ -33,9 +32,12 @@ public class PluginFinder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String[] t = PluginFinder.this.dir.list(PluginFinder.this.filter);
-			PluginFinder.this.files.clear();
 			for (String nom : t) {
-				PluginFinder.this.files.add(new File(nom));
+				System.out.println(nom);
+				
+				// Création objet plugin
+				// Vérification si existant
+					// Si non : ajout au menu
 			}
 		}
 		

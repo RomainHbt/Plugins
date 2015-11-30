@@ -2,12 +2,16 @@ package ihm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
+
+import plugins.Plugin;
 
 public class MainFrame extends JFrame{
 	private static final long serialVersionUID = -5459108069903947815L;
@@ -23,6 +27,9 @@ public class MainFrame extends JFrame{
 	private JMenuItem open;
 	private JMenuItem exit;
 	
+	// Map of plugins
+	private Map<String, Plugin> plugins;
+	
 	public MainFrame(String title) {
 		super(title);
 		
@@ -36,6 +43,8 @@ public class MainFrame extends JFrame{
 		this.add(textArea);
 		// Display the window
 		this.setVisible(true);
+		
+		this.plugins = new HashMap<>();
 	}
 	
 	public void addMenu() {
@@ -74,102 +83,27 @@ public class MainFrame extends JFrame{
 	public String getText(){
 		return this.textArea.getText();
 	}
-
-	/**
-	 * @return the menu
-	 */
-	public JMenuBar getMenu() {
-		return menu;
-	}
-
-	/**
-	 * @param menu the menu to set
-	 */
-	public void setMenu(JMenuBar menu) {
-		this.menu = menu;
-	}
-
-	/**
-	 * @return the files
-	 */
-	public JMenu getFiles() {
-		return files;
-	}
-
-	/**
-	 * @param files the files to set
-	 */
-	public void setFiles(JMenu files) {
-		this.files = files;
-	}
-
-	/**
-	 * @return the tools
-	 */
-	public JMenu getTools() {
-		return tools;
-	}
-
-	/**
-	 * @param tools the tools to set
-	 */
-	public void setTools(JMenu tools) {
-		this.tools = tools;
-	}
-
-	/**
-	 * @return the help
-	 */
-	public JMenu getHelp() {
-		return help;
-	}
-
-	/**
-	 * @param help the help to set
-	 */
-	public void setHelp(JMenu help) {
-		this.help = help;
-	}
-
-	/**
-	 * @return the open
-	 */
-	public JMenuItem getOpen() {
-		return open;
-	}
-
-	/**
-	 * @param open the open to set
-	 */
-	public void setOpen(JMenuItem open) {
-		this.open = open;
-	}
-
-	/**
-	 * @return the exit
-	 */
-	public JMenuItem getExit() {
-		return exit;
-	}
-
-	/**
-	 * @param exit the exit to set
-	 */
-	public void setExit(JMenuItem exit) {
-		this.exit = exit;
+	
+	public boolean existsPlugin(String nom){
+		return this.plugins.containsKey(nom);
 	}
 	
-	public void addPlugin(String name){
-		JMenuItem plugin = new JMenuItem(name);
+	public void addPlugin(Plugin plugin){
+		String name = plugin.getLabel();
+		this.plugins.put(name, plugin);
 		
-		plugin.addActionListener(new ActionListener() {
+		JMenuItem pluginMenu = new JMenuItem(name);
+		
+		pluginMenu.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
+			public void actionPerformed(ActionEvent a) {
+				// Transform the text
+				String textTransformed = MainFrame.this.plugins.get(a.getActionCommand()).transform(MainFrame.this.getText());
+				MainFrame.this.setText(textTransformed);
 			}
 		});
 		
-		this.tools.add(plugin);
+		this.tools.add(pluginMenu);
 	}
 
 }

@@ -2,7 +2,7 @@ package main;
 
 import ihm.MainFrame;
 
-import java.awt.Frame;
+import javax.swing.JFrame;
 
 import plugins.PluginFinder;
 
@@ -13,7 +13,7 @@ public class Main {
 	 */
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		PluginFinder finder = new PluginFinder("./dropins");
-		Frame f = new MainFrame("Un super cool éditeur.");
+		JFrame f = new MainFrame("Un super cool éditeur.");
+		PluginFinder finder = new PluginFinder("./dropins", f);
 	}
 }
