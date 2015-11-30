@@ -14,7 +14,7 @@ public class FilterTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		dir = new File("./dropins");
+		dir = new File("/dropins");
 		f = new PluginFilter();
 	}
 
