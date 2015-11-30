@@ -158,5 +158,18 @@ public class MainFrame extends JFrame{
 	public void setExit(JMenuItem exit) {
 		this.exit = exit;
 	}
+	
+	public void addPlugin(String name){
+		JMenuItem plugin = new JMenuItem(name);
+		
+		plugin.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		this.tools.add(plugin);
+	}
 
 }

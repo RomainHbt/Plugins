@@ -1,17 +1,19 @@
 package main;
 
-import java.io.File;
+import ihm.MainFrame;
+
+import java.awt.Frame;
+
+import plugins.PluginFinder;
 
 public class Main {
 
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		File dir = new File("./dropins");
-		String[] t = dir.list();
-		for (String string : t) {
-			System.out.println(string);
-		}
+		PluginFinder finder = new PluginFinder("./dropins");
+		Frame f = new MainFrame("Un super cool éditeur.");
 	}
 }

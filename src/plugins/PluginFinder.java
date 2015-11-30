@@ -24,6 +24,10 @@ public class PluginFinder {
 		this.timer.start();
 	}
 	
+	public List<File> getPlugins(){
+		return this.files;
+	}
+	
 	private class CheckFilesListener implements ActionListener{
 
 		@Override
