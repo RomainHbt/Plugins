@@ -2,6 +2,7 @@ package ihm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +65,18 @@ public class MainFrame extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser(pluginFolder);
+				final JFileChooser fileChooser = new JFileChooser(pluginFolder);
+				fileChooser.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
+							File selectedFile = fileChooser.getSelectedFile();
+							System.out.println(selectedFile);
+						}
+					}
+				});
+				
 				fileChooser.showDialog(MainFrame.this, "Retour");
 				
 			}

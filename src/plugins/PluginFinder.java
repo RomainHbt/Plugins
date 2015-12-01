@@ -38,7 +38,6 @@ public class PluginFinder {
 					c = Class.forName("plugins."+nom.substring(0, nom.length()-6));
 					instance = (Plugin) c.getConstructor().newInstance();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				// Vérification si existant
