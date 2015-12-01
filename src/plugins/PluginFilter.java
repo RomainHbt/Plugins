@@ -3,9 +3,6 @@ package plugins;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 public class PluginFilter implements FilenameFilter {
 
@@ -51,6 +48,7 @@ public class PluginFilter implements FilenameFilter {
 			
 			// Test if the new instance implements Plugin
 			if(!(instance instanceof plugins.Plugin)){
+				System.err.println("La classe n'implemente pas Plugin");
 				return false;
 			}
 			
