@@ -5,14 +5,12 @@ import ihm.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 
-import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class PluginFinder {
 
-	private static int DELAY = 2000;
+	private static int DELAY = 2000; 
 	private PluginFilter filter;
 	private Timer timer;
 	private File dir;
@@ -25,7 +23,6 @@ public class PluginFinder {
 		this.dir = new File(dir);
 		this.timer = new Timer(DELAY, new CheckFilesListener());
 		this.timer.start();
-		
 	}
 	
 	private class CheckFilesListener implements ActionListener{

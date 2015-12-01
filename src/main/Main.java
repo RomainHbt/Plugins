@@ -10,7 +10,9 @@ public class Main {
 	 */
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		MainFrame f = new MainFrame("Un super cool éditeur.");
-		PluginFinder finder = new PluginFinder("./dropins/plugins", f);
+		final String pluginFolder = "./dropins/plugins";
+		
+		MainFrame f = new MainFrame("Un super cool éditeur.", pluginFolder);
+		PluginFinder finder = new PluginFinder(pluginFolder, f);
 	}
 }

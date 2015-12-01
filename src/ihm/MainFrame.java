@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,13 +27,16 @@ public class MainFrame extends JFrame{
 	// The item of each sub-menu
 	private JMenuItem open;
 	private JMenuItem exit;
+	// Use to open the fileChooser
+	private String pluginFolder;
 	
 	// Map of plugins
 	private Map<String, Plugin> plugins;
 	
-	public MainFrame(String title) {
+	public MainFrame(String title, String pluginFolder) {
 		super(title);
-		
+		this.pluginFolder = pluginFolder;
+
 		textArea = new JTextArea(5,30);
 		
 		// Customization of the window
@@ -54,7 +58,16 @@ public class MainFrame extends JFrame{
 		help = new JMenu("Aide");
 		
 		open = new JMenuItem("Ouvrir");
-		//open.addActionListener(new OpenListener(this));
+		open.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser(pluginFolder);
+				fileChooser.showDialog(MainFrame.this, "Retour");
+				
+			}
+		});
+		
 		exit = new JMenuItem("Quitter");
 		
 		exit.addActionListener(new ActionListener() {
@@ -77,11 +90,25 @@ public class MainFrame extends JFrame{
 	}
 	
 	public void setText(String s){
-		this.textArea.setText(s);
+		if(this.textArea.getSelectedText() == null){
+			this.textArea.setText(s);
+		}else{
+			int startIdx = this.textArea.getSelectionStart();
+			int endIdx = this.textArea.getSelectionEnd();
+			char[] baseText = this.textArea.getText().toCharArray();
+			char[] changeSequence = s.toCharArray();
+			
+			for (int i = startIdx; i < endIdx; i++) {
+				baseText[i] = changeSequence[i-startIdx];
+			}
+			this.textArea.setText(new String(baseText));
+		}
 	}
 	
 	public String getText(){
-		return this.textArea.getText();
+		return (this.textArea.getSelectedText() == null ? 
+				this.textArea.getText() : 
+				this.textArea.getSelectedText());
 	}
 	
 	public boolean existsPlugin(String nom){

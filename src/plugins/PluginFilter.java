@@ -37,39 +37,39 @@ public class PluginFilter implements FilenameFilter {
 			return false;
 		}
 
-			// Test if there is an empty constructor
-			try {
-				if(c.getConstructor() == null){
-					System.err.println("Pas de constructeur vide");
-					return false;
-				}
-				// Instance new object with its constructor
-				instance = c.getConstructor().newInstance();
-				
-				// Test if the new instance implements Plugin
-				if(!(instance instanceof plugins.Plugin)){
-					System.err.println("La classe n'implemente pas Plugin");
-					return false;
-				}
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-				return false;
-			} catch (SecurityException e) {
-				e.printStackTrace();
-				return false;
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				return false;
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-				return false;
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
+		// Test if there is an empty constructor
+		try {
+			if(c.getConstructor() == null){
+				System.err.println("Pas de constructeur vide");
 				return false;
 			}
+			// Instance new object with its constructor
+			instance = c.getConstructor().newInstance();
+			
+			// Test if the new instance implements Plugin
+			if(!(instance instanceof plugins.Plugin)){
+				System.err.println("La classe n'implemente pas Plugin");
+				return false;
+			}
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+			return false;
+		} catch (SecurityException e) {
+			e.printStackTrace();
+			return false;
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return false;
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+			return false;
+		}
 		
 		return true;
 	}
