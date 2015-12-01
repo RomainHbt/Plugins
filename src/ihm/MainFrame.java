@@ -27,9 +27,9 @@ public class MainFrame extends JFrame{
 	// The item of each sub-menu
 	private JMenuItem open;
 	private JMenuItem exit;
+	private JMenuItem helpMenuItem;
 	// Use to open the fileChooser
 	private String pluginFolder;
-	
 	// Map of plugins
 	private Map<String, Plugin> plugins;
 	
@@ -51,6 +51,8 @@ public class MainFrame extends JFrame{
 		this.plugins = new HashMap<>();
 	}
 	
+	
+	
 	public void addMenu() {
 		menu = new JMenuBar();
 		files = new JMenu("Fichier");
@@ -69,12 +71,20 @@ public class MainFrame extends JFrame{
 		});
 		
 		exit = new JMenuItem("Quitter");
-		
 		exit.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
+			}
+		});
+		
+		helpMenuItem = new JMenuItem("Comment faire...");
+		helpMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new HelpFrame();
 			}
 		});
 		
@@ -85,6 +95,8 @@ public class MainFrame extends JFrame{
 		menu.add(files);
 		menu.add(tools);
 		menu.add(help);
+		
+		help.add(helpMenuItem);
 		
 		setJMenuBar(menu);
 	}
