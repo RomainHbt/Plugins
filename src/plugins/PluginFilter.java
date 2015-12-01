@@ -16,29 +16,27 @@ public class PluginFilter implements FilenameFilter {
 		URL fileUrl = null;
 		
 		// Test if dir exists
-		if(!dir.exists()) 
+		if(!dir.exists()) {
+			System.err.println("Dossier innexistant");
 			return false;
+		}
 		// Then load the file
 		File fichier = new File(dir.getPath()+File.separator+name);
 		
 		// Test if exits and if its name finished with ".class"
-		if(!fichier.exists())
+		if(!fichier.exists()){
+			System.err.println("Fichier introuvable");
 			return false;
-		if(!name.endsWith(".class")) 
+		}
+		if(!name.endsWith(".class")) {
+			System.err.println("Le fichier specifie n'est pas un .class");
 			return false;
+		}
 		
 		try {
-			// Convert File to a URL
-			fileUrl = fichier.toURL();
-		    URL[] urls = new URL[]{fileUrl};
+			c = Class.forName("plugins."+name.substring(0, name.length()-6));
 		    
-		    // Create a new class loader with the directory
-		    ClassLoader cl = new URLClassLoader(urls);
-		    
-			// c = Class.forName("plugins."+name.substring(0, name.length()-6));
-		    c = cl.loadClass("plugins."+name.substring(0, name.length()-6));
-		    
-		} catch (ClassNotFoundException | MalformedURLException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
