@@ -13,7 +13,6 @@ public class PluginFilter implements FilenameFilter {
 	public boolean accept(File dir, String name){
 		Class<?> c = null;
 		Object instance = null;
-		URL fileUrl = null;
 		
 		// Test if dir exists
 		if(!dir.exists()) {
