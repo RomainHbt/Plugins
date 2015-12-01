@@ -3,6 +3,9 @@ package plugins;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 public class PluginFilter implements FilenameFilter {
 
@@ -10,20 +13,32 @@ public class PluginFilter implements FilenameFilter {
 	public boolean accept(File dir, String name){
 		Class<?> c = null;
 		Object instance = null;
+		URL fileUrl = null;
 		
+		// Test if dir exists
 		if(!dir.exists()) 
 			return false;
-		
+		// Then load the file
 		File fichier = new File(dir.getPath()+File.separator+name);
 		
-		if(!fichier.exists()) 
+		// Test if exits and if its name finished with ".class"
+		if(!fichier.exists())
 			return false;
 		if(!name.endsWith(".class")) 
 			return false;
 		
 		try {
-			c = Class.forName("plugins."+name.substring(0, name.length()-6));
-		} catch (ClassNotFoundException e) {
+			// Convert File to a URL
+			fileUrl = fichier.toURL();
+		    URL[] urls = new URL[]{fileUrl};
+		    
+		    // Create a new class loader with the directory
+		    ClassLoader cl = new URLClassLoader(urls);
+		    
+			// c = Class.forName("plugins."+name.substring(0, name.length()-6));
+		    c = cl.loadClass("plugins."+name.substring(0, name.length()-6));
+		    
+		} catch (ClassNotFoundException | MalformedURLException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -59,6 +74,8 @@ public class PluginFilter implements FilenameFilter {
 			return false;
 		}
 		
+		System.out.println(instance);
+
 		return true;
 	}
 
