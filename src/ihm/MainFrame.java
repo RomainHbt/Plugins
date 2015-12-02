@@ -3,8 +3,10 @@ package ihm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFileChooser;
@@ -74,7 +76,20 @@ public class MainFrame extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						if(e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
 							File selectedFile = fileChooser.getSelectedFile();
-							System.out.println(selectedFile);
+							try {
+								FileInputStream in = new FileInputStream(selectedFile);
+								byte[] buffer = new byte[512];
+								StringBuilder sb = new StringBuilder();
+								while(in.read(buffer) > 0){
+									sb.append(new String(buffer));
+								}
+								in.close();
+								MainFrame.this.setText(sb.toString());
+							} catch (FileNotFoundException e1) {
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
 				});
