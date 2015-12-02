@@ -2,7 +2,6 @@ package plugins;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.lang.reflect.InvocationTargetException;
 
 public class PluginFilter implements FilenameFilter {
 
@@ -13,7 +12,7 @@ public class PluginFilter implements FilenameFilter {
 		
 		// Test if dir exists
 		if(!dir.exists()) {
-			System.err.println("Dossier innexistant");
+			System.err.println(dir.getName()+" : Dossier innexistant");
 			return false;
 		}
 		// Then load the file
@@ -21,11 +20,11 @@ public class PluginFilter implements FilenameFilter {
 		
 		// Test if exits and if its name finished with ".class"
 		if(!fichier.exists()){
-			System.err.println("Fichier introuvable");
+			System.err.println(fichier.getName()+" : Fichier introuvable");
 			return false;
 		}
 		if(!name.endsWith(".class")) {
-			System.err.println("Le fichier specifie n'est pas un .class");
+			System.err.println(fichier.getName()+" : Le fichier specifie n'est pas un .class");
 			return false;
 		}
 		
@@ -33,14 +32,14 @@ public class PluginFilter implements FilenameFilter {
 			c = Class.forName("plugins."+name.substring(0, name.length()-6));
 		    
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.err.println(fichier.getName()+" : La classe n'a pas été trouvée (est-elle dans le package plugins ?)");
 			return false;
 		}
 
 		// Test if there is an empty constructor
 		try {
 			if(c.getConstructor() == null){
-				System.err.println("Pas de constructeur vide");
+				System.err.println(fichier.getName()+" : Pas de constructeur vide");
 				return false;
 			}
 			// Instance new object with its constructor
@@ -48,25 +47,13 @@ public class PluginFilter implements FilenameFilter {
 			
 			// Test if the new instance implements Plugin
 			if(!(instance instanceof plugins.Plugin)){
-				System.err.println("La classe n'implemente pas Plugin");
+				System.err.println(fichier.getName()+" : La classe n'implemente pas Plugin");
 				return false;
 			}
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			System.err.println(fichier.getName()+" : Pas de constructeur vide");
 			return false;
-		} catch (SecurityException e) {
-			e.printStackTrace();
-			return false;
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-			return false;
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			return false;
-		} catch (InvocationTargetException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
