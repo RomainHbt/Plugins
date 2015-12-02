@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFileChooser;
@@ -33,6 +34,7 @@ public class MainFrame extends JFrame{
 	private String pluginFolder;
 	// Map of plugins
 	private Map<String, Plugin> plugins;
+	private Map<String, JMenuItem> pluginsItem;
 	
 	public MainFrame(String title, String pluginFolder) {
 		super(title);
@@ -50,8 +52,8 @@ public class MainFrame extends JFrame{
 		this.setVisible(true);
 		
 		this.plugins = new HashMap<>();
+		this.pluginsItem = new HashMap<>();
 	}
-	
 	
 	
 	public void addMenu() {
@@ -154,7 +156,14 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
+		this.pluginsItem.put(name, pluginMenu);
 		this.tools.add(pluginMenu);
+	}
+	
+	public void removePlugin(Plugin plugin){
+		this.plugins.remove(plugin.getLabel());
+		this.tools.remove(pluginsItem.get(plugin.getLabel()));
+		this.pluginsItem.remove(plugin.getLabel());
 	}
 
 }
