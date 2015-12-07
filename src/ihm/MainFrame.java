@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class MainFrame extends JFrame{
 	private JMenu help;
 	// The item of each sub-menu
 	private JMenuItem open;
+	private JMenuItem save;
+	private JMenuItem saveAs;
 	private JMenuItem exit;
 	private JMenuItem helpMenuItem;
 	// Use to open the fileChooser
@@ -37,6 +40,8 @@ public class MainFrame extends JFrame{
 	// Map of plugins
 	private Map<String, Plugin> plugins;
 	private Map<String, JMenuItem> pluginsItem;
+	
+	private File file;
 	
 	public MainFrame(String title, String pluginFolder) {
 		super(title);
@@ -74,10 +79,11 @@ public class MainFrame extends JFrame{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						// Load File
 						if(e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
-							File selectedFile = fileChooser.getSelectedFile();
+							file = fileChooser.getSelectedFile();
 							try {
-								FileInputStream in = new FileInputStream(selectedFile);
+								FileInputStream in = new FileInputStream(file);
 								byte[] buffer = new byte[512];
 								StringBuilder sb = new StringBuilder();
 								while(in.read(buffer) > 0){
@@ -108,6 +114,73 @@ public class MainFrame extends JFrame{
 			}
 		});
 		
+		save = new JMenuItem("Enregistrer");
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(file != null){
+					try {
+						FileOutputStream out = new FileOutputStream(file);
+						out.write(textArea.getText().getBytes());
+						out.close();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}else{
+					final JFileChooser fileChooser = new JFileChooser(pluginFolder);
+					fileChooser.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							if(e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
+								file = fileChooser.getSelectedFile();
+								try {
+									FileOutputStream out = new FileOutputStream(file);
+									out.write(textArea.getText().getBytes());
+									out.close();
+								}catch(IOException ex){
+									ex.printStackTrace();
+								}
+							}
+						}
+					});
+					
+					fileChooser.showDialog(MainFrame.this, "Enregistrer");
+				}
+			}
+		});
+		
+		saveAs = new JMenuItem("Enregistrer sous");
+		saveAs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				final JFileChooser fileChooser = new JFileChooser(pluginFolder);
+				fileChooser.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if(e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
+							file = fileChooser.getSelectedFile();
+							try {
+								FileOutputStream out = new FileOutputStream(file);
+								out.write(textArea.getText().getBytes());
+								out.close();
+							}catch(IOException ex){
+								ex.printStackTrace();
+							}
+						}
+					}
+				});
+				
+				fileChooser.showDialog(MainFrame.this, "Enregistrer sous");
+				
+			}
+		});
+		
 		helpMenuItem = new JMenuItem("Comment faire...");
 		helpMenuItem.addActionListener(new ActionListener() {
 			
@@ -120,6 +193,9 @@ public class MainFrame extends JFrame{
 		files.add(open);
 		files.addSeparator();
 		files.add(exit);
+		files.addSeparator();
+		files.add(save);
+		files.add(saveAs);
 		
 		menu.add(files);
 		menu.add(tools);
