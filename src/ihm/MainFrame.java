@@ -19,6 +19,11 @@ import javax.swing.JTextArea;
 
 import plugins.Plugin;
 
+/**
+ * Class to create the main editor
+ * @author hembert bellamy
+ *
+ */
 public class MainFrame extends JFrame{
 	private static final long serialVersionUID = -5459108069903947815L;
 	// The area where you can write your text
@@ -43,6 +48,11 @@ public class MainFrame extends JFrame{
 	
 	private File file;
 	
+	/**
+	 * Constructor for the editor
+	 * @param title Frame's name
+	 * @param pluginFolder Path to the plugins folder
+	 */
 	public MainFrame(String title, String pluginFolder) {
 		super(title);
 		this.pluginFolder = pluginFolder;
@@ -62,7 +72,9 @@ public class MainFrame extends JFrame{
 		this.pluginsItem = new HashMap<>();
 	}
 	
-	
+	/**
+	 * Add a top menu on the frame
+	 */
 	public void addMenu() {
 		menu = new JMenuBar();
 		files = new JMenu("Fichier");
@@ -206,6 +218,10 @@ public class MainFrame extends JFrame{
 		setJMenuBar(menu);
 	}
 	
+	/**
+	 * Set a text in the teaxt area
+	 * @param s The text to set
+	 */
 	public void setText(String s){
 		if(this.textArea.getSelectedText() == null){
 			this.textArea.setText(s);
@@ -222,16 +238,29 @@ public class MainFrame extends JFrame{
 		}
 	}
 	
+	/**
+	 * Return the text in the text area
+	 * @return
+	 */
 	public String getText(){
 		return (this.textArea.getSelectedText() == null ? 
 				this.textArea.getText() : 
 				this.textArea.getSelectedText());
 	}
 	
+	/**
+	 * Test if the plugin exists in the menu
+	 * @param nom Plugin's name
+	 * @return true if the plugin is already in the menu, false if not
+	 */
 	public boolean existsPlugin(String nom){
 		return this.plugins.containsKey(nom);
 	}
 	
+	/**
+	 * Add a plugin in the menu
+	 * @param plugin Plugin to be added
+	 */
 	public void addPlugin(Plugin plugin){
 		String name = plugin.getLabel();
 		this.plugins.put(name, plugin);
@@ -251,6 +280,10 @@ public class MainFrame extends JFrame{
 		this.tools.add(pluginMenu);
 	}
 	
+	/**
+	 * Remove a from in the menu
+	 * @param plugin Plugin to be removed
+	 */
 	public void removePlugin(Plugin plugin){
 		this.plugins.remove(plugin.getLabel());
 		this.tools.remove(pluginsItem.get(plugin.getLabel()));

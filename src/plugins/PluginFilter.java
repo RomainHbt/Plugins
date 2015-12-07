@@ -3,6 +3,11 @@ package plugins;
 import java.io.File;
 import java.io.FilenameFilter;
 
+/**
+ * The filter to detect plugins in a folder
+ * @author hembert bellamy
+ *
+ */
 public class PluginFilter implements FilenameFilter {
 
 	@Override
@@ -32,7 +37,7 @@ public class PluginFilter implements FilenameFilter {
 			c = Class.forName("plugins."+name.substring(0, name.length()-6));
 		    
 		} catch (ClassNotFoundException e) {
-			System.err.println(fichier.getName()+" : La classe n'a pas été trouvée (est-elle dans le package plugins ?)");
+			System.err.println(fichier.getName()+" : La classe n'a pas ete trouvee (est-elle dans le package plugins ?)");
 			return false;
 		}
 
