@@ -5,6 +5,7 @@ import ihm.MainFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,9 +35,10 @@ public class PluginFinder {
 		this.frame = frame;
 		this.filter = new PluginFilter();
 		this.dir = new File(dir);
-		this.timer = new Timer(DELAY, new CheckFilesListener());
+		CheckFilesListener listener = new CheckFilesListener();
+		listener.actionPerformed(null);
+		this.timer = new Timer(DELAY, listener);
 		this.timer.start();
-		this.importedPlugins = getPluginListByNames(PluginFinder.this.dir.list(PluginFinder.this.filter));
 	}
 	
 	/**
@@ -49,12 +51,14 @@ public class PluginFinder {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			List<Plugin> newPlugin = null;
+			List<Plugin> removedPlugins = null;
 			
 			String[] t = PluginFinder.this.dir.list(PluginFinder.this.filter);
 			
 			newPlugin = getPluginListByNames(t);
+			removedPlugins = getRemovedPlugin(PluginFinder.this.importedPlugins, newPlugin);
 			
-			for (Plugin p : getRemovedPlugin(importedPlugins, newPlugin)) {
+			for (Plugin p : removedPlugins) {
 				PluginFinder.this.frame.removePlugin(p);
 			}
 			
@@ -78,6 +82,7 @@ public class PluginFinder {
 	 * @return a list of plugins
 	 */
 	private List<Plugin> getRemovedPlugin(List<Plugin> alreadyImported, List<Plugin> newPluginList){
+		if(alreadyImported == null || alreadyImported.isEmpty()) return new ArrayList<>(); // Empty list returned
 		alreadyImported.removeAll(newPluginList);
 		return alreadyImported;
 		
